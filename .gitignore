@@ -1,7 +1,9 @@
-# build directories
+# build directories / files
 cmake-build*
+CMakeLists.txt.user
 
 # generated files
 
 # misc
 .DS_Store
+.directory

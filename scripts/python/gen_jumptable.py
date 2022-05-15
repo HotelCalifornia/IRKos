@@ -5,7 +5,9 @@ from typing import Union, List, NamedTuple, Dict
 
 import yaml
 
-with open('../jumptable.yaml', 'r') as jumptable:
+base_dir = os.path.join(os.path.dirname(__file__), '../../')
+
+with open(os.path.join(base_dir, 'jumptable.yaml'), 'r') as jumptable:
     jumptable_raw = yaml.safe_load(jumptable)
 
 print(jumptable_raw)
@@ -47,9 +49,9 @@ class Definition(Function):
         args = ', '.join(Function.decl_args(self.args))
         return textwrap.dedent(f"""
             {self.return_type} {self.name}({args}) {{
-                {self.return_type} (*func)({args}) = 
+                {self.return_type} (*func)({args}) =
                     *(({self.return_type} (**const)({args}))PTR_ADDR({self.index}));
-                
+
                 return func({', '.join([a.get('name') for a in self.args])});
             }}""")
 
@@ -64,7 +66,7 @@ header_include = textwrap.dedent(f"""\
 
 """)
 
-with open('../linker/irk_jumptable.ld', 'w+') as ld_script:
+with open(os.path.join(base_dir, 'linker/irk_jumptable.ld'), 'w+') as ld_script:
     ld_script.write(header_comment)
     ld_script.write(
         textwrap.dedent(f"""\
@@ -73,8 +75,8 @@ with open('../linker/irk_jumptable.ld', 'w+') as ld_script:
     )
 
 
-with open('../include/jumptable/irk_jumptable_api.h', 'w+') as api_header, \
-        open('../include/jumptable/irk_jumptable_boot.h', 'w+') as boot_header:
+with open(os.path.join(base_dir, 'include/jumptable/irk_jumptable_api.h'), 'w+') as api_header, \
+        open(os.path.join(base_dir, 'include/jumptable/irk_jumptable_boot.h'), 'w+') as boot_header:
     contents = header_comment + \
         header_include + \
         ';\n'.join(
@@ -84,7 +86,7 @@ with open('../include/jumptable/irk_jumptable_api.h', 'w+') as api_header, \
     api_header.write(contents)
     boot_header.write(contents)
 
-with open('../src/jumptable/irk_jumptable_api.c', 'w+') as api_implementation:
+with open(os.path.join(base_dir, 'src/jumptable/irk_jumptable_api.c'), 'w+') as api_implementation:
     api_implementation.write(header_comment)
     api_implementation.write(header_include)
     api_implementation.write(
@@ -101,7 +103,7 @@ with open('../src/jumptable/irk_jumptable_api.c', 'w+') as api_implementation:
         )
     )
 
-with open('../src/jumptable/irk_jumptable_boot.c', 'w+') as boot_implementation:
+with open(os.path.join(base_dir, 'src/jumptable/irk_jumptable_boot.c'), 'w+') as boot_implementation:
     boot_implementation.write(header_comment)
     boot_implementation.write(header_include)
     table_entries = ',\n'.join([f"(void (*const)(void))&{f.get('name')}" for f in jumptable_raw.get('functions')])
