@@ -3,6 +3,11 @@ cmake-build*
 CMakeLists.txt.user
 
 # generated files
+include/jumptable/irk_jumptable_api.h
+include/jumptable/irk_jumptable_boot.h
+linker/irk_jumptable.ld
+src/jumptable/irk_jumptable_api.c
+src/jumptable/irk_jumptable_boot.c
 
 # misc
 .DS_Store

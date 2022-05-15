@@ -2,7 +2,13 @@
 <project version="4">
   <component name="CMakeSharedSettings">
     <configurations>
-      <configuration PROFILE_NAME="Debug-arm-none-eabi" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="arm-none-eabi" />
+      <configuration PROFILE_NAME="Debug-arm-none-eabi" ENABLED="true" CONFIG_NAME="Debug" TOOLCHAIN_NAME="arm-none-eabi">
+        <ADDITIONAL_GENERATION_ENVIRONMENT>
+          <envs>
+            <env name="VERBOSE" value="1" />
+          </envs>
+        </ADDITIONAL_GENERATION_ENVIRONMENT>
+      </configuration>
     </configurations>
   </component>
 </project>

@@ -4,7 +4,7 @@ set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR ARM)
 set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
 
-project(IRKos)
+project(IRKos C ASM)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_C_STANDARD 17)
@@ -49,6 +49,7 @@ add_executable(bootloader.elf
         src/jumptable/irk_jumptable_boot.c)
 
 target_include_directories(bootloader.elf PUBLIC include)
-target_compile_options(bootloader.elf PUBLIC --specs=rdimon.specs)
-target_link_libraries(bootloader.elf PUBLIC v5rts)
-target_link_options(bootloader.elf PUBLIC "LINKER:-T ${CMAKE_SOURCE_DIR}/linker/irk_boot.ld")
+target_compile_options(bootloader.elf PUBLIC --specs=rdimon.specs -nostartfiles -nostdlib)
+target_link_libraries(bootloader.elf PUBLIC v5rts c)
+target_link_directories(bootloader.elf PUBLIC ${CMAKE_SOURCE_DIR}/linker)
+target_link_options(bootloader.elf PUBLIC --specs=rdimon.specs -nostartfiles "LINKER:-T${CMAKE_SOURCE_DIR}/linker/irk_boot.ld")

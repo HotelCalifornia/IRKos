@@ -61,11 +61,14 @@ void __attribute__ ((interrupt)) FIQHandler(void) {
 
 extern struct _reent *_impure_ptr;
 struct _reent impure_ptr;
-void _start(void);
+//void _start(void);
+void main(void);
 
 void StartC(void) {
   _impure_ptr = &impure_ptr;
-  _start();
+//  _start();
+    // i think we can just go directly into main because we're linking without startfiles
+    main();
 }
 
 
