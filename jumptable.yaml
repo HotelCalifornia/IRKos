@@ -1,0 +1,13 @@
+base: 0x37ffc00 # = 0x03800000 - 0x00000400
+functions:
+  - name: irkSystemTimerReinitForRtos
+    return: int32_t
+    args:
+      - name: priority
+        type: uint32_t
+      - name: handler
+        type: function
+        return: void
+        args:
+          - name: ''
+            type: void*

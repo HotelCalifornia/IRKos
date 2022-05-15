@@ -1,0 +1,7 @@
+# build directories
+cmake-build*
+
+# generated files
+
+# misc
+.DS_Store
